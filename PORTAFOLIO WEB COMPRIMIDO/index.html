@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheila Arias Deibe — Editora Audiovisual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* =============================================
+     ESTILOS — editar colores, fuentes, tamaños acá
+     PALETA: dark premium editorial
+     FUENTES: Fraunces (serif titulos) + Inter (sans body)
+     ============================================= */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-alt: #141414;
+    --bg-elevated: #1a1a1a;
+    --text: #ededec;
+    --text-soft: #b8b6b0;
+    --text-muted: #6e6c66;
+    --border: #232220;
+    --accent: #d4af6f; /* dorado sutil para acentos editoriales */
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    z-index: 100;
+  }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav .brand {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: var(--text);
+  }
+  nav .links {
+    display: flex;
+    gap: 32px;
+  }
+  nav .links a {
+    color: var(--text-soft);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+  nav .links a:hover { color: var(--text); }
+
+  /* HERO — más compacto, editorial */
+  .hero {
+    padding: 70px 0 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 46px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+    max-width: 800px;
+    color: var(--text);
+  }
+  .hero .tagline {
+    font-size: 16px;
+    color: var(--text-soft);
+    max-width: 580px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  /* SECTIONS */
+  section { padding: 80px 0; }
+  section.alt { background: var(--bg-alt); }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    margin-bottom: 28px;
+    max-width: 700px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  p {
+    font-size: 15.5px;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+    max-width: 700px;
+    font-weight: 400;
+  }
+
+  /* SOBRE MI — foto circular pequeña tipo byline editorial */
+  .sobre-mi-grid {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .sobre-mi-foto {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .sobre-mi-text p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-soft);
+  }
+  .sobre-mi-text p:first-child::first-letter {
+    font-family: var(--serif);
+    font-size: 1.4em;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* TRABAJOS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    padding: 14px 22px;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+    letter-spacing: 0.3px;
+  }
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+  .tab:hover { color: var(--text); }
+
+  /* Grid vertical (9:16) — para Redes y Ads */
+  .grid-vertical {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .grid-vertical .work-card {
+    aspect-ratio: 9/16;
+  }
+
+  /* Grid horizontal (16:9) — para YouTube */
+  .grid-horizontal {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .grid-horizontal .work-card {
+    aspect-ratio: 16/9;
+  }
+
+  .work-card {
+    background: var(--bg-elevated);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 1px solid var(--border);
+  }
+  .work-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  }
+  .work-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .work-card .sound-toggle {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s;
+  }
+  .work-card .sound-toggle:hover { background: rgba(0,0,0,0.9); }
+
+  .work-info {
+    padding: 14px 2px;
+  }
+  .work-info .title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .work-info .client {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ENFOQUE — sección destacada con acento */
+  .enfoque {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .enfoque::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+  }
+  .enfoque .section-label { color: var(--accent); }
+  .enfoque h2 {
+    color: var(--text);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .enfoque p {
+    color: var(--text-soft);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 720px;
+  }
+
+  /* CTA NUEVOS CLIENTES */
+  .nuevos-clientes {
+    text-align: center;
+    background: var(--bg-alt);
+  }
+  .nuevos-clientes h2 {
+    margin: 0 auto 20px;
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .nuevos-clientes p {
+    margin: 0 auto 32px;
+    max-width: 580px;
+    font-size: 16px;
+  }
+  .cta-button {
+    display: inline-block;
+    background: transparent;
+    color: var(--text);
+    padding: 14px 34px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border: 1px solid var(--accent);
+  }
+  .cta-button:hover {
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-2px);
+  }
+
+  /* CONTACTO */
+  .contacto {
+    border-top: 1px solid var(--border);
+  }
+  .contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+  }
+  .contacto-info a {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+    font-family: var(--serif);
+  }
+  .contacto-info a:hover { color: var(--accent); }
+  .contacto-info .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
+    nav .links { gap: 18px; }
+    nav .links a { font-size: 12px; }
+    .hero { padding: 50px 0 40px; }
+    .hero h1 { font-size: 32px; }
+    .hero .tagline { font-size: 15px; }
+    section { padding: 56px 0; }
+    h2 { font-size: 24px; }
+    .nuevos-clientes h2 { font-size: 28px; }
+    .sobre-mi-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .sobre-mi-foto { width: 80px; height: 80px; }
+    .sobre-mi-grid { grid-template-columns: 80px 1fr; gap: 20px; }
+    .grid-vertical { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid-horizontal { grid-template-columns: 1fr; gap: 16px; }
+    .contacto-grid { grid-template-columns: 1fr; gap: 30px; }
+  }
+  @media (max-width: 480px) {
+    .grid-vertical { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =====================================================
+     NAV — editar nombre y links si querés
+     ===================================================== -->
+<nav>
+  <div class="container">
+    <div class="brand">Sheila Arias Deibe</div>
+    <div class="links">
+      <a href="#trabajos">Trabajos</a>
+      <a href="#enfoque">Enfoque</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<!-- =====================================================
+     HERO — corto, mensaje fuerte, sin distracciones
+     ===================================================== -->
+<header class="hero">
+  <div class="container">
+    <h1>Sistemas escalables de contenido audiovisual.</h1>
+    <p class="tagline">Para marcas y artistas que necesitan presencia constante en redes, sin perder identidad.</p>
+  </div>
+</header>
+
+<!-- =====================================================
+     TRABAJOS — para agregar o sacar videos:
+       - Copiá un bloque <div> con <video> y editá el src y los textos
+       - El src es relativo a esta carpeta (incluí la subcarpeta)
+     ===================================================== -->
+<section id="trabajos" class="alt">
+  <div class="container">
+    <div class="section-label">Selección de trabajos</div>
+    <h2>Lo que vengo haciendo.</h2>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(event, 'redes')">Redes sociales</button>
+      <button class="tab" onclick="switchTab(event, 'youtube')">YouTube</button>
+      <button class="tab" onclick="switchTab(event, 'ads')">Ads</button>
+    </div>
+
+    <!-- TAB: REDES SOCIALES (vertical 9:16) -->
+    <div id="redes" class="tab-panel active">
+      <div class="grid-vertical">
+
+        <div>
+          <div class="work-card">
+            <video src="Redes sociales/Billy Joel Merch Drop.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Billy Joel</div>
+            <div class="client">Merch Drop</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Redes sociales/U2- Cutdown.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">U2</div>
+            <div class="client">Cutdown</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Redes sociales/Teejay Artist Feature.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Teejay</div>
+            <div class="client">Artist Feature</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Redes sociales/Ash BTS.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Ash</div>
+            <div class="client">Behind the Scenes</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Redes sociales/Keyon Artist Feature.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Keyon</div>
+            <div class="client">Artist Feature</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Redes sociales/Davionne Product Reel.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Davionne</div>
+            <div class="client">Product Reel</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: YOUTUBE (horizontal 16:9 — grid 2 columnas) -->
+    <div id="youtube" class="tab-panel">
+      <div class="grid-horizontal">
+
+        <div>
+          <div class="work-card">
+            <video src="Youtube/PROYECTV.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">PROYECTV</div>
+            <div class="client">Motion graphics · Animación</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Youtube/Van Morrison.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Van Morrison</div>
+            <div class="client">Motion graphics · Animación</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: ADS (vertical 9:16) -->
+    <div id="ads" class="tab-panel">
+      <p style="margin-bottom: 32px; color: var(--text-soft); font-size: 14px; max-width: 600px;">Reels y ads para curso de inglés. Grabación y edición a cargo, con tomas broll, animaciones de texto sutiles y un tono casual de redes.</p>
+      <div class="grid-vertical">
+
+        <div>
+          <div class="work-card">
+            <video src="Ads/Ad Verbo to be (Vert).mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Verbo To Be</div>
+            <div class="client">Grabación + edición</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Ads/no hablas ingles.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">No hablás inglés</div>
+            <div class="client">Grabación + edición</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Ads/podcast.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Podcast</div>
+            <div class="client">Grabación + edición</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="work-card">
+            <video src="Ads/Equipo trabajo.mp4" muted loop playsinline preload="none" data-lazy="true"></video>
+            <button class="sound-toggle" onclick="toggleSound(event)" aria-label="Activar sonido">🔇</button>
+          </div>
+          <div class="work-info">
+            <div class="title">Equipo de trabajo</div>
+            <div class="client">Grabación + edición</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     SOBRE MÍ — después de Trabajos. Foto circular pequeña.
+     ===================================================== -->
+<section class="sobre-mi">
+  <div class="container">
+    <div class="section-label">Quién soy</div>
+    <h2>Editora audiovisual y diseñadora de sistemas.</h2>
+
+    <div class="sobre-mi-grid">
+      <div class="sobre-mi-foto" style="background-image: url('Foto%20Sheila.jpg');"></div>
+
+      <div class="sobre-mi-text">
+        <p>Trabajo con marcas y artistas que necesitan presencia constante en redes sin perder identidad. Mi enfoque combina edición ágil con planificación estratégica para que cada pieza aporte a la narrativa, no solo al feed.</p>
+        <p>Vengo del trabajo audiovisual para músicos internacionales, donde aprendí a condensar la esencia de un artista en cortes precisos. Hoy trabajo en simultáneo con marcas en proyectos de redes, ads educativos y motion graphics, mientras desarrollo un sistema integral de producción audiovisual que escala con cada colaboración.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     ENFOQUE DE TRABAJO — texto editable
+     ===================================================== -->
+<section id="enfoque" class="enfoque">
+  <div class="container">
+    <div class="section-label">Enfoque de trabajo</div>
+    <h2>Un sistema que escala con la marca, no contra ella.</h2>
+    <p>Trabajo con un flujo de producción propio que combina edición optimizada y planificación estratégica de grabaciones. Lo estoy escalando como sistema integral, y en esta etapa colaboro con un grupo acotado de marcas con las que pruebo y refino el método con material real, distintos estilos y dinámicas. Cada colaboración suma a esa evolución, y las marcas que entran en este momento acceden de forma natural a las mejoras que iré incorporando, sin costo adicional.</p>
+    <p>En la práctica, esto se traduce en algo muy concreto: cada jornada de grabación rinde más, los tiempos de entrega se acortan y la consistencia entre piezas se sostiene de forma automática. La inversión responde a un enfoque distinto: no es edición pieza por pieza, es un proceso que escala con la marca. En el mediano plazo, suele traducirse en menos jornadas de grabación al año por más volumen de contenido entregado.</p>
+    <p>Trabajar conmigo en esta etapa es una asociación real. Mientras el sistema se desarrolla con un grupo selecto de marcas, las que están desde el inicio acceden a condiciones de trabajo que más adelante no se replicarán de la misma forma. Tu marca crece, el sistema crece, y la confianza de este momento se traduce en valor sostenido en el tiempo.</p>
+  </div>
+</section>
+
+<!-- =====================================================
+     NUEVOS CLIENTES — CTA principal
+     ===================================================== -->
+<section class="nuevos-clientes">
+  <div class="container">
+    <div class="section-label">Para nuevos clientes</div>
+    <h2>El próximo paso es una conversación.</h2>
+    <p>Si necesitás producción audiovisual constante, sin perder identidad ni invertir en jornadas de grabación cada semana, hablemos. Trabajo con marcas y artistas que valoran proceso y consistencia.</p>
+    <a href="https://wa.me/5493541205290?text=Hola%20Sheila%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tu%20servicio" class="cta-button" target="_blank" rel="noopener">Conversemos por WhatsApp</a>
+  </div>
+</section>
+
+<!-- =====================================================
+     CONTACTO — editar links
+     ===================================================== -->
+<section id="contacto" class="contacto">
+  <div class="container">
+    <div class="section-label">Contacto</div>
+    <h2>Hablemos.</h2>
+    <div class="contacto-grid">
+      <div class="contacto-info">
+        <div class="label">WhatsApp</div>
+        <a href="https://wa.me/5493541205290?text=Hola%20Sheila%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tu%20servicio" target="_blank" rel="noopener">+54 9 3541 20-5290</a>
+      </div>
+      <div class="contacto-info">
+        <div class="label">TikTok</div>
+        <a href="https://tiktok.com/@sheila_ctrls" target="_blank" rel="noopener">@sheila_ctrls</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2026 Sheila Arias Deibe — Editora audiovisual
+  </div>
+</footer>
+
+<script>
+  // Lazy loading + autoplay solo cuando entran en viewport (Intersection Observer)
+  // Esto evita que el navegador colapse intentando descargar todos los videos a la vez
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        // Cargar y reproducir cuando es visible
+        if (!video.src && video.dataset.src) {
+          video.src = video.dataset.src;
+        }
+        video.play().catch(()=>{});
+      } else {
+        // Pausar cuando sale de pantalla
+        video.pause();
+      }
+    });
+  }, { rootMargin: '50px', threshold: 0.25 });
+
+  // Aplicar el observer a todos los videos del tab activo al cargar
+  function activateLazyVideos() {
+    document.querySelectorAll('.tab-panel.active video[data-lazy="true"]').forEach(v => {
+      videoObserver.observe(v);
+    });
+  }
+
+  // Desactivar observer en tabs inactivos
+  function deactivateLazyVideos() {
+    document.querySelectorAll('.tab-panel:not(.active) video[data-lazy="true"]').forEach(v => {
+      videoObserver.unobserve(v);
+      v.pause();
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    activateLazyVideos();
+  });
+
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    e.target.classList.add('active');
+    document.getElementById(id).classList.add('active');
+
+    deactivateLazyVideos();
+    activateLazyVideos();
+  }
+
+  function toggleSound(e) {
+    e.stopPropagation();
+    const card = e.target.closest('.work-card');
+    const video = card.querySelector('video');
+    if (video.muted) {
+      // Mutear todos los demás primero
+      document.querySelectorAll('.work-card video').forEach(v => v.muted = true);
+      document.querySelectorAll('.sound-toggle').forEach(b => b.textContent = '🔇');
+      // Activar sonido en este
+      video.muted = false;
+      e.target.textContent = '🔊';
+    } else {
+      video.muted = true;
+      e.target.textContent = '🔇';
+    }
+  }
+</script>
+
+</body>
+</html>
