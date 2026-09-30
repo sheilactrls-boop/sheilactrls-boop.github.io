@@ -1,0 +1,152 @@
+<title>Consulta Visible Escena 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;900&display=swap">
+<style>
+  /* Layout: una sola escena a pantalla completa. El video de luz solo se ve a través de las letras
+     del título (track matte por multiplicación); al salir la luz, las letras quedan sólidas. */
+  :root{
+    --negro:#000;
+    --blanco:#F2F2F2;
+    --gris:#8C8C8C;
+    --tenue:rgba(242,242,242,.55);
+    --sans:"Poppins","Helvetica Neue",Arial,sans-serif;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%; overflow:hidden}
+  body{margin:0; background:var(--negro); color:var(--blanco); font-family:var(--sans); -webkit-font-smoothing:antialiased}
+
+  .escena{position:fixed; inset:0; overflow:hidden; background:var(--negro)}
+  video{position:absolute; inset:0; width:100%; height:100%; object-fit:fill}
+
+  /* Todas las capas comparten la misma composición para que el texto calce exacto */
+  .capa{position:absolute; inset:0; display:grid; place-content:center; justify-items:center; gap:clamp(18px,3vh,32px);
+        padding-inline:clamp(16px,4vw,56px); text-align:center}
+  .pregunta{margin:0; font-weight:500; font-size:clamp(13px,1.1vw,16px); letter-spacing:.04em; color:var(--tenue); min-height:1.5em}
+  h1{margin:0; font-weight:900; font-size:clamp(50px,9.6vw,172px); line-height:.9; letter-spacing:-.045em; text-wrap:balance}
+  h1 .l2{display:block; font-weight:500; letter-spacing:-.04em}
+  .accion{min-height:48px}
+
+  /* Capa 1: negro con letras blancas en multiplicación = el video solo se ve dentro de las letras */
+  .matte{background:var(--negro); color:#fff; mix-blend-mode:multiply}
+  .matte .pregunta, .matte .accion, .fantasma .pregunta, .fantasma .accion{visibility:hidden}
+  /* Capa 2: la silueta apenas visible antes de que llegue la luz */
+  .fantasma h1{color:rgba(255,255,255,.07); transition:color 1s ease}
+  body.fin .fantasma h1{color:transparent}
+  /* Capa 3: interfaz y título sólido final */
+  .ui h1{opacity:0; transition:opacity 1.4s ease}
+  .ui h1 .l1{color:var(--blanco)}
+  .ui h1 .l2{color:var(--gris)}
+  body.fin .ui h1{opacity:1}
+
+  .cursor{display:inline-block; width:.5em; height:1.1em; background:var(--blanco); vertical-align:-3px; margin-left:3px; animation:parpadeo 1.06s steps(1) infinite}
+  @keyframes parpadeo{50%{opacity:0}}
+
+  .btn{display:inline-flex; align-items:center; padding:15px 26px; border:1px solid var(--blanco); background:var(--blanco); color:#000; cursor:pointer;
+       font:500 12px var(--sans); letter-spacing:.22em; text-transform:uppercase; opacity:0; transform:translateY(8px); transition:opacity .8s ease .5s, transform .8s ease .5s, background .3s, color .3s}
+  .btn:hover{background:transparent; color:var(--blanco)}
+  body.fin .btn{opacity:1; transform:none}
+  :focus-visible{outline:1px solid var(--blanco); outline-offset:4px}
+
+  .grano{position:absolute; inset:-80px; pointer-events:none; opacity:.14; mix-blend-mode:screen; animation:tiritar 1s steps(3) infinite;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .5 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>")}
+  @keyframes tiritar{0%{transform:translate(0,0)}33%{transform:translate(-18px,11px)}66%{transform:translate(13px,-14px)}100%{transform:translate(0,0)}}
+
+  .marca{position:absolute; z-index:5; top:calc(22px + env(safe-area-inset-top,0px)); left:clamp(16px,3vw,40px); font-weight:500; font-size:14px; letter-spacing:.02em}
+  .repetir{position:absolute; z-index:5; right:clamp(16px,3vw,40px); bottom:calc(20px + env(safe-area-inset-bottom,0px)); background:none; border:0; color:var(--tenue);
+           font:500 11px var(--sans); letter-spacing:.2em; text-transform:uppercase; cursor:pointer; padding:8px 0}
+  .repetir:hover{color:var(--blanco)}
+
+  @media (max-width:760px){
+    h1{font-size:clamp(46px,13.4vw,64px)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .grano,.cursor{animation:none}
+    .btn,.ui h1,.fantasma h1{transition:none}
+  }
+</style>
+
+<div class="escena">
+  <video id="luz" src="luz.mp4" poster="luz.jpg" muted playsinline preload="auto" aria-hidden="true"></video>
+
+  <div class="capa matte" aria-hidden="true">
+    <p class="pregunta">&nbsp;</p>
+    <h1><span class="l1">Que la IA</span><span class="l2">te recomiende.</span></h1>
+    <div class="accion"></div>
+  </div>
+
+  <div class="capa fantasma" aria-hidden="true">
+    <p class="pregunta">&nbsp;</p>
+    <h1><span class="l1">Que la IA</span><span class="l2">te recomiende.</span></h1>
+    <div class="accion"></div>
+  </div>
+
+  <div class="grano" aria-hidden="true"></div>
+
+  <div class="capa ui">
+    <p class="pregunta" id="pregunta" aria-label="¿A quién me recomiendas?"></p>
+    <h1 aria-label="Que la IA te recomiende."><span class="l1">Que la IA</span><span class="l2">te recomiende.</span></h1>
+    <div class="accion"><button class="btn" type="button" id="ver">Ver cómo</button></div>
+  </div>
+
+  <div class="marca">Consulta Visible</div>
+  <button class="repetir" type="button" id="repetir">Repetir</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var PREGUNTA = "¿A quién me recomiendas?";
+  var body = document.body;
+  var video = document.getElementById("luz");
+  var preg = document.getElementById("pregunta");
+  var quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var corrida = 0, seguro = null;
+
+  function esperar(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  function terminar(){
+    body.classList.add("fin");
+    var c = preg.querySelector(".cursor"); if (c) c.remove();
+  }
+
+  async function correr(){
+    var yo = ++corrida;
+    body.classList.remove("fin");
+    clearTimeout(seguro);
+    video.pause();
+    try { video.currentTime = 0; } catch(e){}
+    preg.innerHTML = "";
+
+    if (quieto){ preg.textContent = PREGUNTA; terminar(); return; }
+
+    await esperar(500);
+    var t = document.createTextNode(""), cur = document.createElement("span");
+    cur.className = "cursor"; preg.appendChild(t); preg.appendChild(cur);
+    for (var i=0;i<PREGUNTA.length;i++){
+      if (yo !== corrida) return;
+      t.data += PREGUNTA[i];
+      await esperar(42);
+    }
+    await esperar(350);
+    if (yo !== corrida) return;
+
+    /* Si el video no puede reproducirse, se muestra la escena terminada */
+    var p = video.play();
+    if (p && p.catch) p.catch(function(){ if (yo === corrida) terminar(); });
+    seguro = setTimeout(function(){ if (yo === corrida) terminar(); }, 11000);
+    setTimeout(function(){ if (yo === corrida){ var c = preg.querySelector(".cursor"); if (c) c.remove(); } }, 2600);
+  }
+
+  /* La luz sale del cuadro cerca del segundo 6,6: ahí las letras quedan sólidas */
+  video.addEventListener("timeupdate", function(){ if (video.currentTime > 6.3) terminar(); });
+  video.addEventListener("ended", terminar);
+  video.addEventListener("error", terminar);
+
+  document.getElementById("repetir").addEventListener("click", correr);
+  document.getElementById("ver").addEventListener("click", function(){ /* escena 2: pendiente */ });
+
+  correr();
+})();
+</script>
